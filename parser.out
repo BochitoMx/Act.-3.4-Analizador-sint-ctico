@@ -1,0 +1,550 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BREAK
+    CASE
+    CONST
+    CONTINUE
+    DEFAULT
+    DO
+    ELSE
+    ENUM
+    FOR
+    IF
+    LA
+    LONG
+    MAIN
+    PRINT
+    RETURN
+    SHORT
+    SIGNED
+    SIZEOF
+    STATIC
+    STRUCT
+    SWITCH
+    TYPEDEF
+    UNION
+    UNSIGNED
+    VARIABLE
+    VOID
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE
+Rule 2     declaraciones -> declaraciones declaracion
+Rule 3     declaraciones -> declaracion
+Rule 4     declaracion -> tipo IDENTIFICADOR PUNTOYCOMA
+Rule 5     declaracion -> declaracion_variable
+Rule 6     declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA
+Rule 7     instruccion -> READ IDENTIFICADOR PUNTOYCOMA
+Rule 8     instruccion -> PRINTF CADENA PUNTOYCOMA
+Rule 9     instruccion -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA
+Rule 10    instruccion -> END PUNTOYCOMA
+Rule 11    instruccion -> WHILE PARENTESIS_APERTURA expresion PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE
+Rule 12    tipo -> INT
+Rule 13    tipo -> FLOAT
+Rule 14    tipo -> CHAR
+Rule 15    expresion -> expresion SUMA termino
+Rule 16    expresion -> expresion RESTA termino
+Rule 17    expresion -> termino
+Rule 18    termino -> termino MULT factor
+Rule 19    termino -> termino DIV factor
+Rule 20    termino -> factor
+Rule 21    factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+Rule 22    factor -> NUMERO
+Rule 23    factor -> IDENTIFICADOR
+
+Terminals, with rules where they appear
+
+ASIGNAR              : 6 9
+BREAK                : 
+CADENA               : 8
+CASE                 : 
+CHAR                 : 14
+CONST                : 
+CONTINUE             : 
+DEFAULT              : 
+DIV                  : 19
+DO                   : 
+ELSE                 : 
+END                  : 10
+ENUM                 : 
+FLOAT                : 13
+FOR                  : 
+IDENTIFICADOR        : 1 4 6 7 9 23
+IF                   : 
+INT                  : 12
+LA                   : 
+LLAVE_APERTURA       : 1 11
+LLAVE_CIERRE         : 1 11
+LONG                 : 
+MAIN                 : 
+MULT                 : 18
+NUMERO               : 22
+PARENTESIS_APERTURA  : 1 11 21
+PARENTESIS_CIERRE    : 1 11 21
+PRINT                : 
+PRINTF               : 8
+PROGRAMA             : 1
+PUNTOYCOMA           : 4 6 7 8 9 10
+READ                 : 7
+RESTA                : 16
+RETURN               : 
+SHORT                : 
+SIGNED               : 
+SIZEOF               : 
+STATIC               : 
+STRUCT               : 
+SUMA                 : 15
+SWITCH               : 
+TYPEDEF              : 
+UNION                : 
+UNSIGNED             : 
+VARIABLE             : 
+VOID                 : 
+WHILE                : 11
+error                : 
+
+Nonterminals, with rules where they appear
+
+declaracion          : 2 3
+declaracion_variable : 5
+declaraciones        : 1 2 11
+expresion            : 6 9 11 15 16 21
+factor               : 18 19 20
+instruccion          : 
+programa             : 0
+termino              : 15 16 17 18 19
+tipo                 : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE
+
+    PROGRAMA        shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAMA . IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE
+
+    IDENTIFICADOR   shift and go to state 3
+
+
+state 3
+
+    (1) programa -> PROGRAMA IDENTIFICADOR . PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE
+
+    PARENTESIS_APERTURA shift and go to state 4
+
+
+state 4
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA . PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE
+
+    PARENTESIS_CIERRE shift and go to state 5
+
+
+state 5
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE . LLAVE_APERTURA declaraciones LLAVE_CIERRE
+
+    LLAVE_APERTURA  shift and go to state 6
+
+
+state 6
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA . declaraciones LLAVE_CIERRE
+    (2) declaraciones -> . declaraciones declaracion
+    (3) declaraciones -> . declaracion
+    (4) declaracion -> . tipo IDENTIFICADOR PUNTOYCOMA
+    (5) declaracion -> . declaracion_variable
+    (12) tipo -> . INT
+    (13) tipo -> . FLOAT
+    (14) tipo -> . CHAR
+    (6) declaracion_variable -> . IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA
+
+    INT             shift and go to state 12
+    FLOAT           shift and go to state 13
+    CHAR            shift and go to state 14
+    IDENTIFICADOR   shift and go to state 7
+
+    declaraciones                  shift and go to state 8
+    declaracion                    shift and go to state 9
+    tipo                           shift and go to state 10
+    declaracion_variable           shift and go to state 11
+
+state 7
+
+    (6) declaracion_variable -> IDENTIFICADOR . ASIGNAR expresion PUNTOYCOMA
+
+    ASIGNAR         shift and go to state 15
+
+
+state 8
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones . LLAVE_CIERRE
+    (2) declaraciones -> declaraciones . declaracion
+    (4) declaracion -> . tipo IDENTIFICADOR PUNTOYCOMA
+    (5) declaracion -> . declaracion_variable
+    (12) tipo -> . INT
+    (13) tipo -> . FLOAT
+    (14) tipo -> . CHAR
+    (6) declaracion_variable -> . IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA
+
+    LLAVE_CIERRE    shift and go to state 16
+    INT             shift and go to state 12
+    FLOAT           shift and go to state 13
+    CHAR            shift and go to state 14
+    IDENTIFICADOR   shift and go to state 7
+
+    declaracion                    shift and go to state 17
+    tipo                           shift and go to state 10
+    declaracion_variable           shift and go to state 11
+
+state 9
+
+    (3) declaraciones -> declaracion .
+
+    LLAVE_CIERRE    reduce using rule 3 (declaraciones -> declaracion .)
+    INT             reduce using rule 3 (declaraciones -> declaracion .)
+    FLOAT           reduce using rule 3 (declaraciones -> declaracion .)
+    CHAR            reduce using rule 3 (declaraciones -> declaracion .)
+    IDENTIFICADOR   reduce using rule 3 (declaraciones -> declaracion .)
+
+
+state 10
+
+    (4) declaracion -> tipo . IDENTIFICADOR PUNTOYCOMA
+
+    IDENTIFICADOR   shift and go to state 18
+
+
+state 11
+
+    (5) declaracion -> declaracion_variable .
+
+    LLAVE_CIERRE    reduce using rule 5 (declaracion -> declaracion_variable .)
+    INT             reduce using rule 5 (declaracion -> declaracion_variable .)
+    FLOAT           reduce using rule 5 (declaracion -> declaracion_variable .)
+    CHAR            reduce using rule 5 (declaracion -> declaracion_variable .)
+    IDENTIFICADOR   reduce using rule 5 (declaracion -> declaracion_variable .)
+
+
+state 12
+
+    (12) tipo -> INT .
+
+    IDENTIFICADOR   reduce using rule 12 (tipo -> INT .)
+
+
+state 13
+
+    (13) tipo -> FLOAT .
+
+    IDENTIFICADOR   reduce using rule 13 (tipo -> FLOAT .)
+
+
+state 14
+
+    (14) tipo -> CHAR .
+
+    IDENTIFICADOR   reduce using rule 14 (tipo -> CHAR .)
+
+
+state 15
+
+    (6) declaracion_variable -> IDENTIFICADOR ASIGNAR . expresion PUNTOYCOMA
+    (15) expresion -> . expresion SUMA termino
+    (16) expresion -> . expresion RESTA termino
+    (17) expresion -> . termino
+    (18) termino -> . termino MULT factor
+    (19) termino -> . termino DIV factor
+    (20) termino -> . factor
+    (21) factor -> . PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+    (22) factor -> . NUMERO
+    (23) factor -> . IDENTIFICADOR
+
+    PARENTESIS_APERTURA shift and go to state 23
+    NUMERO          shift and go to state 24
+    IDENTIFICADOR   shift and go to state 19
+
+    expresion                      shift and go to state 20
+    termino                        shift and go to state 21
+    factor                         shift and go to state 22
+
+state 16
+
+    (1) programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE .
+
+    $end            reduce using rule 1 (programa -> PROGRAMA IDENTIFICADOR PARENTESIS_APERTURA PARENTESIS_CIERRE LLAVE_APERTURA declaraciones LLAVE_CIERRE .)
+
+
+state 17
+
+    (2) declaraciones -> declaraciones declaracion .
+
+    LLAVE_CIERRE    reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+    INT             reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+    FLOAT           reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+    CHAR            reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+    IDENTIFICADOR   reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+
+
+state 18
+
+    (4) declaracion -> tipo IDENTIFICADOR . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 25
+
+
+state 19
+
+    (23) factor -> IDENTIFICADOR .
+
+    MULT            reduce using rule 23 (factor -> IDENTIFICADOR .)
+    DIV             reduce using rule 23 (factor -> IDENTIFICADOR .)
+    PUNTOYCOMA      reduce using rule 23 (factor -> IDENTIFICADOR .)
+    SUMA            reduce using rule 23 (factor -> IDENTIFICADOR .)
+    RESTA           reduce using rule 23 (factor -> IDENTIFICADOR .)
+    PARENTESIS_CIERRE reduce using rule 23 (factor -> IDENTIFICADOR .)
+
+
+state 20
+
+    (6) declaracion_variable -> IDENTIFICADOR ASIGNAR expresion . PUNTOYCOMA
+    (15) expresion -> expresion . SUMA termino
+    (16) expresion -> expresion . RESTA termino
+
+    PUNTOYCOMA      shift and go to state 26
+    SUMA            shift and go to state 27
+    RESTA           shift and go to state 28
+
+
+state 21
+
+    (17) expresion -> termino .
+    (18) termino -> termino . MULT factor
+    (19) termino -> termino . DIV factor
+
+    PUNTOYCOMA      reduce using rule 17 (expresion -> termino .)
+    SUMA            reduce using rule 17 (expresion -> termino .)
+    RESTA           reduce using rule 17 (expresion -> termino .)
+    PARENTESIS_CIERRE reduce using rule 17 (expresion -> termino .)
+    MULT            shift and go to state 29
+    DIV             shift and go to state 30
+
+
+state 22
+
+    (20) termino -> factor .
+
+    MULT            reduce using rule 20 (termino -> factor .)
+    DIV             reduce using rule 20 (termino -> factor .)
+    PUNTOYCOMA      reduce using rule 20 (termino -> factor .)
+    SUMA            reduce using rule 20 (termino -> factor .)
+    RESTA           reduce using rule 20 (termino -> factor .)
+    PARENTESIS_CIERRE reduce using rule 20 (termino -> factor .)
+
+
+state 23
+
+    (21) factor -> PARENTESIS_APERTURA . expresion PARENTESIS_CIERRE
+    (15) expresion -> . expresion SUMA termino
+    (16) expresion -> . expresion RESTA termino
+    (17) expresion -> . termino
+    (18) termino -> . termino MULT factor
+    (19) termino -> . termino DIV factor
+    (20) termino -> . factor
+    (21) factor -> . PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+    (22) factor -> . NUMERO
+    (23) factor -> . IDENTIFICADOR
+
+    PARENTESIS_APERTURA shift and go to state 23
+    NUMERO          shift and go to state 24
+    IDENTIFICADOR   shift and go to state 19
+
+    expresion                      shift and go to state 31
+    termino                        shift and go to state 21
+    factor                         shift and go to state 22
+
+state 24
+
+    (22) factor -> NUMERO .
+
+    MULT            reduce using rule 22 (factor -> NUMERO .)
+    DIV             reduce using rule 22 (factor -> NUMERO .)
+    PUNTOYCOMA      reduce using rule 22 (factor -> NUMERO .)
+    SUMA            reduce using rule 22 (factor -> NUMERO .)
+    RESTA           reduce using rule 22 (factor -> NUMERO .)
+    PARENTESIS_CIERRE reduce using rule 22 (factor -> NUMERO .)
+
+
+state 25
+
+    (4) declaracion -> tipo IDENTIFICADOR PUNTOYCOMA .
+
+    LLAVE_CIERRE    reduce using rule 4 (declaracion -> tipo IDENTIFICADOR PUNTOYCOMA .)
+    INT             reduce using rule 4 (declaracion -> tipo IDENTIFICADOR PUNTOYCOMA .)
+    FLOAT           reduce using rule 4 (declaracion -> tipo IDENTIFICADOR PUNTOYCOMA .)
+    CHAR            reduce using rule 4 (declaracion -> tipo IDENTIFICADOR PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 4 (declaracion -> tipo IDENTIFICADOR PUNTOYCOMA .)
+
+
+state 26
+
+    (6) declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA .
+
+    LLAVE_CIERRE    reduce using rule 6 (declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA .)
+    INT             reduce using rule 6 (declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA .)
+    FLOAT           reduce using rule 6 (declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA .)
+    CHAR            reduce using rule 6 (declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 6 (declaracion_variable -> IDENTIFICADOR ASIGNAR expresion PUNTOYCOMA .)
+
+
+state 27
+
+    (15) expresion -> expresion SUMA . termino
+    (18) termino -> . termino MULT factor
+    (19) termino -> . termino DIV factor
+    (20) termino -> . factor
+    (21) factor -> . PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+    (22) factor -> . NUMERO
+    (23) factor -> . IDENTIFICADOR
+
+    PARENTESIS_APERTURA shift and go to state 23
+    NUMERO          shift and go to state 24
+    IDENTIFICADOR   shift and go to state 19
+
+    termino                        shift and go to state 32
+    factor                         shift and go to state 22
+
+state 28
+
+    (16) expresion -> expresion RESTA . termino
+    (18) termino -> . termino MULT factor
+    (19) termino -> . termino DIV factor
+    (20) termino -> . factor
+    (21) factor -> . PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+    (22) factor -> . NUMERO
+    (23) factor -> . IDENTIFICADOR
+
+    PARENTESIS_APERTURA shift and go to state 23
+    NUMERO          shift and go to state 24
+    IDENTIFICADOR   shift and go to state 19
+
+    termino                        shift and go to state 33
+    factor                         shift and go to state 22
+
+state 29
+
+    (18) termino -> termino MULT . factor
+    (21) factor -> . PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+    (22) factor -> . NUMERO
+    (23) factor -> . IDENTIFICADOR
+
+    PARENTESIS_APERTURA shift and go to state 23
+    NUMERO          shift and go to state 24
+    IDENTIFICADOR   shift and go to state 19
+
+    factor                         shift and go to state 34
+
+state 30
+
+    (19) termino -> termino DIV . factor
+    (21) factor -> . PARENTESIS_APERTURA expresion PARENTESIS_CIERRE
+    (22) factor -> . NUMERO
+    (23) factor -> . IDENTIFICADOR
+
+    PARENTESIS_APERTURA shift and go to state 23
+    NUMERO          shift and go to state 24
+    IDENTIFICADOR   shift and go to state 19
+
+    factor                         shift and go to state 35
+
+state 31
+
+    (21) factor -> PARENTESIS_APERTURA expresion . PARENTESIS_CIERRE
+    (15) expresion -> expresion . SUMA termino
+    (16) expresion -> expresion . RESTA termino
+
+    PARENTESIS_CIERRE shift and go to state 36
+    SUMA            shift and go to state 27
+    RESTA           shift and go to state 28
+
+
+state 32
+
+    (15) expresion -> expresion SUMA termino .
+    (18) termino -> termino . MULT factor
+    (19) termino -> termino . DIV factor
+
+    PUNTOYCOMA      reduce using rule 15 (expresion -> expresion SUMA termino .)
+    SUMA            reduce using rule 15 (expresion -> expresion SUMA termino .)
+    RESTA           reduce using rule 15 (expresion -> expresion SUMA termino .)
+    PARENTESIS_CIERRE reduce using rule 15 (expresion -> expresion SUMA termino .)
+    MULT            shift and go to state 29
+    DIV             shift and go to state 30
+
+
+state 33
+
+    (16) expresion -> expresion RESTA termino .
+    (18) termino -> termino . MULT factor
+    (19) termino -> termino . DIV factor
+
+    PUNTOYCOMA      reduce using rule 16 (expresion -> expresion RESTA termino .)
+    SUMA            reduce using rule 16 (expresion -> expresion RESTA termino .)
+    RESTA           reduce using rule 16 (expresion -> expresion RESTA termino .)
+    PARENTESIS_CIERRE reduce using rule 16 (expresion -> expresion RESTA termino .)
+    MULT            shift and go to state 29
+    DIV             shift and go to state 30
+
+
+state 34
+
+    (18) termino -> termino MULT factor .
+
+    MULT            reduce using rule 18 (termino -> termino MULT factor .)
+    DIV             reduce using rule 18 (termino -> termino MULT factor .)
+    PUNTOYCOMA      reduce using rule 18 (termino -> termino MULT factor .)
+    SUMA            reduce using rule 18 (termino -> termino MULT factor .)
+    RESTA           reduce using rule 18 (termino -> termino MULT factor .)
+    PARENTESIS_CIERRE reduce using rule 18 (termino -> termino MULT factor .)
+
+
+state 35
+
+    (19) termino -> termino DIV factor .
+
+    MULT            reduce using rule 19 (termino -> termino DIV factor .)
+    DIV             reduce using rule 19 (termino -> termino DIV factor .)
+    PUNTOYCOMA      reduce using rule 19 (termino -> termino DIV factor .)
+    SUMA            reduce using rule 19 (termino -> termino DIV factor .)
+    RESTA           reduce using rule 19 (termino -> termino DIV factor .)
+    PARENTESIS_CIERRE reduce using rule 19 (termino -> termino DIV factor .)
+
+
+state 36
+
+    (21) factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .
+
+    MULT            reduce using rule 21 (factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .)
+    DIV             reduce using rule 21 (factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .)
+    PUNTOYCOMA      reduce using rule 21 (factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .)
+    SUMA            reduce using rule 21 (factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .)
+    RESTA           reduce using rule 21 (factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .)
+    PARENTESIS_CIERRE reduce using rule 21 (factor -> PARENTESIS_APERTURA expresion PARENTESIS_CIERRE .)
+

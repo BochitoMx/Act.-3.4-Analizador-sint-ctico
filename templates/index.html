@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Léxico y Sintáctico</title>
+    <style>
+        body { 
+         font-family: Arial, sans-serif; background-color: #e0f7ff; margin: 0; padding: 0; 
+        }
+        .container { 
+            width: 90%; margin: 20px auto; background-color: #00a4ff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+        }
+        .header { 
+            text-align: center; font-size: 24px; font-weight: bold; color: #000; 
+        }
+        .input-area { 
+            margin-top: 20px; 
+        }
+        .input-area textarea { 
+            width: 99%; height: 150px; border: 2px solid #ccc; border-radius: 10px; padding: 10px; font-size: 16px; 
+        }
+        .buttons { 
+            display: flex; justify-content: space-between; margin-top: 20px; 
+        }
+        .buttons button { 
+            width: 48%; padding: 10px; font-size: 16px; border-radius: 10px; cursor: pointer; 
+        }
+        .analyze-btn { 
+            background-color: #28a745; color: #fff; border: none; 
+        }
+        .clear-btn { 
+            background-color: #dc3545; color: #fff; border: none; 
+        }
+        .table-container { 
+            margin-top: 20px; overflow-x: auto; 
+        }
+        table { 
+            width: 100%; border-collapse: collapse; background-color: #fff; 
+        }
+        table, th, td { 
+            border: 1px solid #ccc; 
+        }
+        th, td { 
+            padding: 10px; text-align: center; 
+        }
+        th { 
+            background-color: #f2f2f2; color: #333; 
+        }
+        .syntax-container { 
+            margin-top: 20px; 
+        }
+        .syntax-container textarea { 
+            width: 99%; height: 100px; border: 2px solid #ccc; border-radius: 10px; padding: 10px; font-size: 16px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h1>ANALIZADOR LÉXICO Y SINTÁCTICO</h1></div>
+
+        <div class="input-area">
+            <textarea id="codigo" placeholder="Ingrese el código..."></textarea>
+        </div>
+
+        <div class="buttons">
+            <button class="analyze-btn" onclick="analizarCodigo()">Analizar</button>
+            <button class="clear-btn" onclick="limpiar()">Borrar</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token</th>
+                        <th>Palabra Reservada</th>
+                        <th>Identificador</th>
+                        <th>Variable</th>
+                        <th>Cadena</th>
+                        <th>Número</th>
+                        <th>Símbolo</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+                <tbody id="lexicalResults">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="syntax-container">
+            <textarea id="syntacticAnalysis" placeholder="Salida del Analizador Sintáctico..."></textarea>
+        </div>
+    </div>
+    <script>
+        function analizarCodigo() {
+            const code = document.getElementById("codigo").value;
+
+            fetch('/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ code: code }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const lexicalResults = document.getElementById("lexicalResults");
+                lexicalResults.innerHTML = '';
+
+                data.lexical.forEach(token => {
+                    const row = `<tr>
+                        <td>${token.token}</td>
+                        <td>${token.palabra_reservada}</td>
+                        <td>${token.identificador}</td>
+                        <td>${token.variable}</td>
+                        <td>${token.cadena}</td>
+                        <td>${token.numero}</td>
+                        <td>${token.simbolo}</td>
+                        <td>${token.tipo}</td>
+                    </tr>`;
+                    lexicalResults.innerHTML += row;
+                });
+                document.getElementById("syntacticAnalysis").value = data.syntactic;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        function limpiar() {
+            document.getElementById("codigo").value = '';
+            document.getElementById("lexicalResults").innerHTML = '';
+            document.getElementById("syntacticAnalysis").value = '';
+        }
+    </script>
+</body>
+</html>
